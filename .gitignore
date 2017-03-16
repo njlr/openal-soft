@@ -1,7 +1,12 @@
-build
+/build/
 winbuild
 win64build
 include/SLES
 include/sndio.h
 include/sys
 openal-soft.kdev4
+/buck-out/
+/.buckd/
+/buckaroo/
+.buckconfig.local
+BUCKAROO_DEPS

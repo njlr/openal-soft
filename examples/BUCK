@@ -1,0 +1,80 @@
+cxx_library(
+  name = 'common',
+  header_namespace = '',
+  exported_headers = subdir_glob([
+    ('common', '*.h'),
+  ]),
+  srcs = glob([
+    'common/*.c',
+  ]),
+)
+
+cxx_binary(
+  name = 'alffplay',
+  srcs = [
+    'alffplay.c',
+  ],
+  deps = [
+    '//:openal-soft',
+  ],
+)
+
+cxx_binary(
+  name = 'alhrtf',
+  srcs = [
+    'alhrtf.c',
+  ],
+  deps = [
+    '//:openal-soft',
+  ],
+)
+
+cxx_binary(
+  name = 'allatency',
+  srcs = [
+    'allatency.c',
+  ],
+  deps = [
+    '//:openal-soft',
+  ],
+)
+
+cxx_binary(
+  name = 'alloopback',
+  srcs = [
+    'alloopback.c',
+  ],
+  deps = [
+    '//:openal-soft',
+  ],
+)
+
+cxx_binary(
+  name = 'alreverb',
+  srcs = [
+    'alreverb.c',
+  ],
+  deps = [
+    '//:openal-soft',
+  ],
+)
+
+cxx_binary(
+  name = 'alstream',
+  srcs = [
+    'alstream.c',
+  ],
+  deps = [
+    '//:openal-soft',
+  ],
+)
+
+cxx_binary(
+  name = 'altonegen',
+  srcs = [
+    'altonegen.c',
+  ],
+  deps = [
+    '//:openal-soft',
+  ],
+)
