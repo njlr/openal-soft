@@ -44,11 +44,51 @@ MACOS_CONFIG_H = """
 #define PTHREAD_SETNAME_NP_ONE_PARAM
 """
 
+other_sources = [
+  'Alc/backends/alsa.c',
+  'Alc/backends/jack.c',
+  'Alc/backends/portaudio.c',
+  'Alc/backends/oss.c',
+  'Alc/backends/qsa.c',
+  # 'Alc/backends/null.c',
+]
+
+macos_sources = [
+  'Alc/backends/coreaudio.c',
+]
+
+linux_sources = [
+  'Alc/backends/pulseaudio.c',
+]
+
+windows_sources = [
+  'Alc/backends/dsound.c',
+  'Alc/backends/mmdevapi.c',
+  'Alc/backends/winmm.c',
+]
+
+android_sources = [
+  'Alc/backends/opensl.c',
+]
+
+openbsd_sources = [
+  'Alc/backends/sndio.c',
+]
+
+solaris_sources = [
+  'Alc/backends/solaris.c',
+]
+
+platform_sources = macos_sources + linux_sources + windows_sources + \
+                   android_sources + solaris_sources + openbsd_sources + \
+                   other_sources
+
 macos_linker_flags = [
   '-framework', 'AudioToolbox',
   '-framework', 'AudioUnit',
   '-framework', 'CoreAudio',
-  '-framework', 'ApplicationServices',
+  '-framework', 'CoreAudioKit',
+  '-framework', 'CoreServices',
   '-framework', 'ApplicationServices',
 ]
 
@@ -75,15 +115,20 @@ cxx_library(
     ('Include', 'AL/*.h'),
   ]),
   srcs = glob([
-    'Alc/backends/coreaudio.c',
-    'Alc/effects/*.c',
-    'Alc/*.c',
+    'Alc/**/*.c',
     'common/*.c',
     'OpenAL32/*.c',
   ],
-  excludes = glob([
+  excludes = platform_sources + glob([
     'Alc/mixer_neon.c',
   ])),
+  platform_srcs = [
+    ('default', macos_sources),
+    ('^macos.*', macos_sources),
+    ('^linux.*', linux_sources),
+    ('^windows.*', windows_sources),
+    ('^android.*', android_sources),
+  ],
   compiler_flags = [
     '-std=c11',
     '-O2',
